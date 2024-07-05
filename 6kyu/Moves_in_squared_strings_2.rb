@@ -52,37 +52,125 @@ The input strings are separated by , instead of \n. The ouput strings should be 
 
 === PROBLEM ===
 
-Write 3 methods that...
+Write 2 methods that...
 
 1. rot:
-Rotates a given square string 90 degrees clockwise
+Rotates a given square string 180 degrees clockwise
 
 2. selfie_and_rot:
-Rotates a given square string 90 degrees clockwise and reflects it from the last letter
-
-3. oper:
-Calls a given method on a given string
+Rotates a given square string 180 degrees clockwise and reflects it from the last letter
 
 === EXAMPLES ===
 
 rot:
 
+rot("abcd\nefgh\nijkl\nmnop") == "ponm\nlkji\nhgfe\ndcba"
+  split the string at the newline (\n)
+    ['abcd', 'efgh', 'ijkl', 'mnop']
+  reverse each string element
+    ["dcba", "hgfe", "lkji", "ponm"]
+  reverse element order
+    ["ponm", "lkji", "hgfe", "dcba"]
+  join with newline (\n)
+=> "ponm\nlkji\nhgfe\ndcba"
 
+selfie_and_rot:
+
+selfie_and_rot("abcd\nefgh\nijkl\nmnop") == "abcd....\nefgh....\nijkl....\nmnop....\n....ponm\n....lkji\n....hgfe\n....dcba"
+  call #rot
+    "ponm\nlkji\nhgfe\ndcba"
+  to input, add "." times the number of letters AFTER the letters
+    "abcd....\nefgh....\nijkl....\nmnop...."
+  to #rot call, add "." times the number of letters BEFORE the letters
+    "....ponm\n....lkji\n....hgfe\n....dcba"
+  add the two strints together
+=> "abcd....\nefgh....\nijkl....\nmnop....\n....ponm\n....lkji\n....hgfe\n....dcba"
+
+=== DATA ===
+
+rot:
+
+input: a string with multiple newlines (\n)
+intermediate:
+  - an array of string elements split at the newline
+output: a new string that is the rotation of the string 180 degrees clockwise
+
+selfie_and_rot:
+
+input: a string with multiple newlines (\n)
+intermediate:
+  - a new input string object (to add periods to)
+  - a rotated string object (to add periods to)
+output: a new string object that is the original string with periods and the rotation of the string with periods 
+
+=== ALGORITHM ===
+
+rot:
+
+SPLIT the string into an array of letters
+REVERSE each of the string elements
+REVERSE the order of the array
+RETURN the reversed array
+
+=end
+
+=begin
+
+=== ALGORITHM ===
+
+rot:
+
+SPLIT the string into an array of letters
+REVERSE each of the string elements
+REVERSE the order of the array
+JOIN the array back together with newlines (\n)
+RETURN the new string
+
+selfie_and_rot:
+
+ADD periods to the input string
+  - Split the input string at the newline (\n)
+  - Iterate over the array of strings (#map)
+    - current string plus '.' times the size of the current string
+  END
+INITIALIZE 'rotaton' to be the input string passed to an invocation of #rot
+ADD periods to the rotation
+  - Split the input string at the newline (\n)
+  - Iterate over the array of strings (#map)
+    - '.' times the size of the current string plus the current string
+  END
+ADD the period input string to the period rotation
+RETURN the addition
 
 =end
 
 def rot(strng)
-  # your code
+  strng.split("\n").map{ |s| s.reverse }.reverse.join("\n")
 end
+
 def selfie_and_rot(strng)
-  # your code
+  period_input = strng.split("\n").map do |s|
+    s + ('.' * s.size) 
+  end.join("\n")
+
+  period_rotation = rot(strng).split("\n").map do |s|
+    ('.' * s.size) + s
+  end.join("\n")
+
+  period_input + "\n" + period_rotation
 end
+
 def oper(fct, s) 
-  # your code
+  s.method(fct)
 end
 
-oper(method(:rot), "fijuoo\nCqYVct\nDrPmMJ\nerfpBA\nkWjFUG\nCVUfyL") == "LyfUVC\nGUFjWk\nABpfre\nJMmPrD\ntcVYqC\nooujif"
-oper(method(:rot), , "rkKv\ncofM\nzXkh\nflCB" == "BClf\nhkXz\nMfoc\nvKkr")
+p rot("fijuoo\nCqYVct\nDrPmMJ\nerfpBA\nkWjFUG\nCVUfyL") == "LyfUVC\nGUFjWk\nABpfre\nJMmPrD\ntcVYqC\nooujif"
+p rot("rkKv\ncofM\nzXkh\nflCB") == "BClf\nhkXz\nMfoc\nvKkr"
 
+p selfie_and_rot("xZBV\njsbS\nJcpN\nfVnP") == "xZBV....\njsbS....\nJcpN....\nfVnP....\n....PnVf\n....NpcJ\n....Sbsj\n....VBZx"
+p selfie_and_rot("uLcq\nJkuL\nYirX\nnwMB") == "uLcq....\nJkuL....\nYirX....\nnwMB....\n....BMwn\n....XriY\n....LukJ\n....qcLu"
 
-
+p oper(method(:rot), "fijuoo\nCqYVct\nDrPmMJ\nerfpBA\nkWjFUG\nCVUfyL"), "LyfUVC\nGUFjWk\nABpfre\nJMmPrD\ntcVYqC\nooujif"
+p oper(method(:rot), "rkKv\ncofM\nzXkh\nflCB") == "BClf\nhkXz\nMfoc\nvKkr"
+p oper(method(:selfie_and_rot), "xZBV\njsbS\nJcpN\nfVnP") == "xZBV....\njsbS....\nJcpN....\nfVnP....\n....PnVf\n....NpcJ\n....Sbsj\n....VBZx"
+p oper(method(:selfie_and_rot), "uLcq\nJkuL\nYirX\nnwMB") == "uLcq....\nJkuL....\nYirX....\nnwMB....\n....BMwn\n....XriY\n....LukJ\n....qcLu"
