@@ -161,7 +161,7 @@ def selfie_and_rot(strng)
 end
 
 def oper(fct, s) 
-  s.method(fct)
+  send(fct, s)
 end
 
 p rot("fijuoo\nCqYVct\nDrPmMJ\nerfpBA\nkWjFUG\nCVUfyL") == "LyfUVC\nGUFjWk\nABpfre\nJMmPrD\ntcVYqC\nooujif"
@@ -170,7 +170,7 @@ p rot("rkKv\ncofM\nzXkh\nflCB") == "BClf\nhkXz\nMfoc\nvKkr"
 p selfie_and_rot("xZBV\njsbS\nJcpN\nfVnP") == "xZBV....\njsbS....\nJcpN....\nfVnP....\n....PnVf\n....NpcJ\n....Sbsj\n....VBZx"
 p selfie_and_rot("uLcq\nJkuL\nYirX\nnwMB") == "uLcq....\nJkuL....\nYirX....\nnwMB....\n....BMwn\n....XriY\n....LukJ\n....qcLu"
 
-p oper(method(:rot), "fijuoo\nCqYVct\nDrPmMJ\nerfpBA\nkWjFUG\nCVUfyL"), "LyfUVC\nGUFjWk\nABpfre\nJMmPrD\ntcVYqC\nooujif"
-p oper(method(:rot), "rkKv\ncofM\nzXkh\nflCB") == "BClf\nhkXz\nMfoc\nvKkr"
-p oper(method(:selfie_and_rot), "xZBV\njsbS\nJcpN\nfVnP") == "xZBV....\njsbS....\nJcpN....\nfVnP....\n....PnVf\n....NpcJ\n....Sbsj\n....VBZx"
-p oper(method(:selfie_and_rot), "uLcq\nJkuL\nYirX\nnwMB") == "uLcq....\nJkuL....\nYirX....\nnwMB....\n....BMwn\n....XriY\n....LukJ\n....qcLu"
+p oper(:rot, "fijuoo\nCqYVct\nDrPmMJ\nerfpBA\nkWjFUG\nCVUfyL") == "LyfUVC\nGUFjWk\nABpfre\nJMmPrD\ntcVYqC\nooujif"
+p oper(:rot, "rkKv\ncofM\nzXkh\nflCB") == "BClf\nhkXz\nMfoc\nvKkr"
+p oper(:selfie_and_rot, "xZBV\njsbS\nJcpN\nfVnP") == "xZBV....\njsbS....\nJcpN....\nfVnP....\n....PnVf\n....NpcJ\n....Sbsj\n....VBZx"
+p oper(:selfie_and_rot, "uLcq\nJkuL\nYirX\nnwMB") == "uLcq....\nJkuL....\nYirX....\nnwMB....\n....BMwn\n....XriY\n....LukJ\n....qcLu"
