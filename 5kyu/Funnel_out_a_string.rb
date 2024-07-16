@@ -106,16 +106,18 @@ END
 RETURN the result
 
 #reorder(funnel)
-ITERATE over the nested array with index (#map, #with_index)
-  Iterate over the subbar with index (#map, #with_index)
+ITERATE over the nested array with index (#each_with_index)
+  Iterate over the subbar with index (#each_with_index)
     IF the current letter is ' '
+      IF funnel[subarr + 1][letter] is a space
+        swap current space for funnel[subarr + 1][letter + 1]
+      IF funnel[subarr + 1][letter + 1] is a space
+        swap current space for funnel[subarr + 1][letter]
       IF funnel[subarr + 1][letter] < funnel[subarr + 1][letter + 1]
-        funnel[subarr + 1][letter]
-      ELSE
-        funnel[subarr + 1][letter + 1]
+        swap current space for funnel[subarr + 1][letter]
+      IF funnel[subarr + 1][letter] > funnel[subarr + 1][letter + 1]
+        swap current space for funnel[subarr + 1][letter + 1]
       END
-    ELSE
-      current letter
     END
   END
 END
