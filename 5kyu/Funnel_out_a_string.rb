@@ -130,7 +130,7 @@ Need to check if any letters in upper layers are spaces FIRST
 
 =end
 
-def reorder(funnel)
+def shift_down(funnel)
   reversed = funnel.reverse
 
   reversed.each_with_index do |subarr, sub_idx|
@@ -153,18 +153,16 @@ def reorder(funnel)
   reordered = reversed.reverse
 end
 
-p reorder([["a","e","c","f"],["d","i","h"],["j","g"],[" "]]) #== [["a","e"," ","f"],["d","i","c"],["j","h"],["g"]]
+# p shift_down([["a","e","c","f"],["d","i","h"],["j","g"],[" "]]) #== [["a","e"," ","f"],["d","i","c"],["j","h"],["g"]]
 
 def funnel_out(funnel)
   funnel = funnel.dup
   result = ''
 
-  loop do
-    break if funnel.all? { |subarr| subarr.all? { |e| e == ' ' } }
-    result
+  until funnel.all? { |subarr| subarr.all? { |e| e == ' ' } }
     result << funnel[-1][0]
     funnel[-1][0] = ' '
-    funnel = reorder(funnel)
+    funnel = shift_down(funnel)
   end
 
   result
